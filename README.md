@@ -12,3 +12,9 @@ This repository presents a self-initiated, educational market risk modeling proj
 - VaR distribution histogram
 - Return vs. VaR plot
 - Backtesting result with violation rate and zone
+
+##View Full Analysis
+Python Version:
+https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Monte-Carlo-Simulation.py
+Jupyter Notebook Version:
+https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Monte-Carlo-Simulation.ipynb
