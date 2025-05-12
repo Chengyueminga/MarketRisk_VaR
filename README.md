@@ -18,3 +18,6 @@ Python Version:
 https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Monte-Carlo-Simulation.py
 Jupyter Notebook Version:
 https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Monte-Carlo-Simulation.ipynb
+
+## Source for VaR background
+https://www.occ.treas.gov/news-issuances/bulletins/1999/bulletin-1999-2.html
