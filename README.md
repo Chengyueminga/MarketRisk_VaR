@@ -1,3 +1,4 @@
+
 ### Monte Carlo VaR Simulation
 This repository presents a self-initiated, educational market risk modeling project focusing on Monte Carlo Simulation of VaR and regulatory backtesting in Basel 3 requirement.
 
@@ -6,7 +7,7 @@ This repository presents a self-initiated, educational market risk modeling proj
   - Simulate 1-day 99% VaR for a hypothetical equity portfolio using Monte Carlo Simulation 
 
 *Methodology:*
-  - Generate synthetic daily return scenarios assuming normal distribution.
+  - Simulate portfolio return paths under normally distributed assumptions.
   - Calculate portfolio-level VaR from simulated return paths.
   - Evaluate model performance using Basel III-style traffic light backtesting. Source: https://www.bis.org/publ/bcbs22.pdf
 
@@ -28,3 +29,6 @@ https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Mo
 
 - U.S. Office of the Comptroller of the Currency (OCC) — *Value-at-Risk Model Risk Control Guidelines*  
    https://www.occ.treas.gov/news-issuances/bulletins/1999/bulletin-1999-2.html
+
+
+>  This project is intended for educational purposes and is based entirely on synthetic market data. 
