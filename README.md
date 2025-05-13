@@ -31,4 +31,9 @@ https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Mo
    https://www.occ.treas.gov/news-issuances/bulletins/1999/bulletin-1999-2.html
 
 
->  This project is intended for educational purposes and is based entirely on synthetic market data. 
+>  This project is intended for educational purposes and is based entirely on synthetic market data.
+
+## License
+
+This repository is publicly available for educational and demonstration purposes only.  
+All rights reserved. Please do not reproduce or reuse the code without explicit permission.
