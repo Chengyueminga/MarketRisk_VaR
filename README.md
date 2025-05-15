@@ -1,6 +1,23 @@
 
-### Monte Carlo VaR Simulation
+# Monte Carlo VaR Simulation with Basel 3 Backtesting
 This repository presents a self-initiated, educational market risk modeling project focusing on Monte Carlo Simulation of VaR and regulatory backtesting in Basel 3 requirement.
+
+## Modeling Approaches
+This project presents two distinct methods for estimating 1-day 99% Value-at-Risk (VaR) using Monte Carlo simulation, followed by regulatory backtesting under the Basel III framework. Both methods use the same portfolio input but differ in modeling assumptions and data generation logic.
+
+## Modeling Approach 1:Historical Return-based Monte Carlo VaR Simulation
+
+This approach directly simulates portfolio returns based on historical data. It assumes that the portfolio’s return follows a standard distribution, with the mean and volatility estimated from historical observations. Monte Carlo simulation is then performed using this distribution to estimate Value-at-Risk (VaR).
+
+- **Input**: Historical daily returns of the portfolio.  
+  Asset-level data is sourced from [Yahoo Finance](https://finance.yahoo.com/) via the `yfinance` Python package.
+- **Assumption**: Returns are assumed to be independent and identically distributed (IID), and follow a normal distribution with historical mean and volatility.
+- **Output**: Simulated 1-day return distribution via Monte Carlo; the 1st percentile represents the 99% Value-at-Risk (VaR).
+- **Backtesting**: Based on the Basel III “traffic light” framework over 250 trading days. Realized VaR exceptions are counted and evaluated according to [BCBS22](https://www.bis.org/publ/bcbs22.pdf).
+
+## Modeling Approach 2:Risk Factor-Based Monte Carlo VaR Simulation via Beta Sensitivity
+
+This approach estimates the portfolio’s sensitivities (betas) to multiple market risk factors using linear regression. The beta-based logic is inspired by the Capital Asset Pricing Model (CAPM), as introduced in Risk Management and Financial Institutions by John C. Hull (4th Edition, Wiley, 2015). The CAPM structure is extended here to incorporate multiple factors in a simulation-based VaR framework.
 
 ## Project Summary
 *Objective:*
