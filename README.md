@@ -58,5 +58,5 @@ Future extensions may include:
 
 ## License
 
-This repository is publicly available for educational and demonstration purposes only.  
-All rights reserved. Please do not reproduce or reuse the code without explicit permission.
+This project is licensed under the MIT License. 
+See the [LICENSE](LICENSE) file for full details.
