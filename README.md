@@ -15,6 +15,8 @@ This approach directly simulates portfolio returns based on historical data. It 
 - **Output**: Simulated 1-day return distribution via Monte Carlo; the 1st percentile represents the 99% Value-at-Risk (VaR).
 - **Backtesting**: Based on the Basel III “traffic light” framework over 250 trading days. Realized VaR exceptions are counted and evaluated according to [BCBS22](https://www.bis.org/publ/bcbs22.pdf).
 
+[Open Notebook](https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Basel3-VaR-Backtest_Monte-Carlo-Simulation.ipynb)
+
 ## Modeling Approach 2:Risk Factor-Based Monte Carlo VaR Simulation via Beta Sensitivity
 
 This approach estimates the portfolio’s sensitivities (betas) to multiple market risk factors using linear regression. The beta-based logic is inspired by the Capital Asset Pricing Model (CAPM), as introduced in Risk Management and Financial Institutions by John C. Hull (4th Edition, Wiley, 2015). The CAPM structure is extended here to incorporate multiple factors in a simulation-based VaR framework.
@@ -45,6 +47,9 @@ These factors collectively represent market, sector, style, and macroeconomic ex
   The 1st percentile of the resulting return distribution represents the 99% Value-at-Risk (VaR).
 
 - **Backtesting**: Based on the Basel III “traffic light” framework over 250 trading days. Realized VaR exceptions are counted and evaluated according to [BCBS22](https://www.bis.org/publ/bcbs22.pdf).
+
+[Open Notebook](https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Beta-Based%20Risk%20Factor%20VaR%20Simulation%20for%20Basel%20III%20Backtesting%20.ipynb)
+
 
 ## Conclusion and Future Work
 
