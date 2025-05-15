@@ -46,7 +46,7 @@ These factors collectively represent market, sector, style, and macroeconomic ex
 
 - **Backtesting**: Based on the Basel III “traffic light” framework over 250 trading days. Realized VaR exceptions are counted and evaluated according to [BCBS22](https://www.bis.org/publ/bcbs22.pdf).
 
-## Summary and Next Steps
+## Conclusion and Future Work
 
 This project demonstrates two practical approaches to Monte Carlo-based Value-at-Risk (VaR) estimation and regulatory backtesting using publicly available data. The factor-based model introduces a flexible framework for simulating risk under multi-dimensional exposures.
 
