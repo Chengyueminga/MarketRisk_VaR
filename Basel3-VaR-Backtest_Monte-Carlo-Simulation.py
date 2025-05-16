@@ -96,6 +96,9 @@ test_start = config["test_start"]
 test_end = config["test_end"]
 confidence = config["confidence"]
 
+##Total_Ticker_P is the price from start date to end date, which will be used for the rolling backtest
+Total_Ticker_P = get_price_data(tickers,start, end)
+
 Port1_Ticker_P = get_price_data(tickers, train_start, train_end)
 Port1_Ticker_P.head()
 
@@ -159,7 +162,9 @@ def Portfolio_R(price_data, weights = None, normalize = True):
 
 
 Port1_Total_R = Portfolio_R(Port1_Ticker_P, weights)
-Port1_Total_R.head()
+
+##Total_R is the return from start date to end date, which will be used for the rolling backtest
+Total_R = Portfolio_R(Total_Ticker_P, weights)
 
 
 # ## 3. Monte Carlo Simulation
@@ -424,10 +429,140 @@ Markdown(f"""
 """)
 
 
-# In[ ]:
+# ### Supplementary Section: Rolling Monte Carlo Backtest
+# 
+# This section extends the baseline VaR backtest by incorporating a rolling evaluation over a 250-day estimation window. The simulation is updated daily, and violations are tracked dynamically to reflect changing market conditions.
+
+# In[21]:
 
 
+def rolling_mc_var_backtest(returns, test_start, test_end=None, window=250, num_sim=10000, confidence=0.99):
 
+    # Convert test_start to Timestamp
+    test_start = pd.to_datetime(test_start)
+    if test_start not in returns.index:
+        raise ValueError(f"test_start {test_start} not in return index.")
+
+    # Get row position of test_start
+    start_idx = returns.index.get_loc(test_start)
+
+    # Ensure at least `window` days of prior data
+    if start_idx < window:
+        raise ValueError(f"Not enough data before test_start to construct {window}-day window.")
+
+    # Determine test_end
+    if test_end is not None:
+        test_end = pd.to_datetime(test_end)
+        if test_end not in returns.index:
+            raise ValueError(f"test_end {test_end} not in return index.")
+        end_idx = returns.index.get_loc(test_end)
+    else:
+        end_idx = len(returns) - 1  # use all remaining data
+
+    # Rolling backtest loop
+    rolling_var = []
+    real_returns = []
+    dates = []
+
+    for i in range(start_idx, end_idx):
+        train = returns[i - window:i]  # previous 250 days
+        mu = train.mean()
+        sigma = train.std()
+
+        simulated = np.random.normal(mu, sigma, num_sim)
+        var = np.percentile(simulated, (1 - confidence) * 100)
+
+        rolling_var.append(var)
+        real_returns.append(returns[i + 1])
+        dates.append(returns.index[i + 1])
+
+    # Construct result DataFrame
+    result_df = pd.DataFrame({
+        'Date': dates,
+        'Real_Return': real_returns,
+        'Rolling_VaR': rolling_var
+    }).set_index('Date')
+
+    result_df['Violation'] = result_df['Real_Return'] < result_df['Rolling_VaR']
+
+    return result_df
+
+
+# In[22]:
+
+
+rolling_result = rolling_mc_var_backtest(
+    returns= Total_R,
+    test_start="2024-05-01",
+    test_end="2025-05-01"
+)
+
+
+# In[26]:
+
+
+x = rolling_result.index
+y = rolling_result['Real_Return'].values.astype("float64")
+y2 = rolling_result['Rolling_VaR'].values.astype("float64")
+mask = y < y2
+
+# Plot
+plt.figure(figsize=(12, 5))
+plt.plot(x, y, label="Actual Portfolio Return", color="blue", linewidth=1)
+plt.plot(x, y2, color="red", linestyle="--", linewidth=2, label="99% Rolling VaR")
+plt.fill_between(x, y, y2, where=mask, color='red', alpha=0.3, label="Violations")
+
+plt.title("Rolling Backtest: Actual Returns vs 99% VaR")
+plt.xlabel("Date")
+plt.ylabel("Daily Return")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+
+# In[25]:
+
+
+total_days = len(rolling_result)
+violations = rolling_result['Violation'].sum()
+violation_rate = violations / total_days
+
+print(f"Test period: {total_days} days")
+print(f"Violations: {violations}")
+print(f"Violation rate: {violation_rate:.2%}")
+
+
+# In[28]:
+
+
+total_days = len(rolling_result)
+violations = rolling_result['Violation'].sum()
+violation_rate = violations / total_days
+
+# Basel traffic light zone
+if violations <= 4:
+    zone = "Green"
+elif violations <= 9:
+    zone = "Yellow"
+else:
+    zone = "Red"
+
+
+# In[29]:
+
+
+Markdown(f"""
+###  Output: Rolling Backtest Result Summary
+
+- Total backtesting days: **{total_days}**
+- VaR confidence level: **99%**
+- Violations (actual return < VaR): **{violations}**
+- Violation rate: **{violation_rate:.2%}**
+
+**Basel traffic light zone**: `{zone}`  
+→ Based on the number of violations, this model falls into the **{zone} zone** under the Basel III regulatory backtesting framework.
+""")
 
 
 # In[ ]:
