@@ -1,5 +1,11 @@
 
 # Monte Carlo VaR Simulation with Basel 3 Backtesting
+
+[![GitHub stars](https://img.shields.io/github/stars/Chengyueminga/MarketRisk_VaR?style=social)](https://github.com/Chengyueminga/MarketRisk_VaR/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/Chengyueminga/MarketRisk_VaR?style=social)](https://github.com/Chengyueminga/MarketRisk_VaR/network/members)
+
+>  If you find this project helpful, please consider ⭐️ starring or 🍴 forking it to support and share with others!
+
 This repository presents a self-initiated, educational market risk modeling project focusing on Monte Carlo Simulation of VaR and regulatory backtesting in Basel 3 requirement.
 
 ## Modeling Approaches
