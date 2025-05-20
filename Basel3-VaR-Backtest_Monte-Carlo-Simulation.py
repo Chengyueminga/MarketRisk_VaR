@@ -142,8 +142,11 @@ def Portfolio_R(price_data, weights = None, normalize = True):
         if normalize:
             weights = weights/np.sum(weights)
         
-        returns = price_data.pct_change().dropna()
-        portfolio_returns = returns.dot(weights)
+        log_returns = np.log(price_data / price_data.shift(1)).dropna()
+
+        # Compute portfolio log return as weighted sum of individual asset log returns
+        portfolio_returns = log_returns.dot(weights)
+        
         return portfolio_returns
     
     except ValueError as e:
@@ -187,38 +190,25 @@ Total_R = Portfolio_R(Total_Ticker_P, weights)
 # In[8]:
 
 
-def MC_VaR(returns, weights, confidence=0.99, simulations=10000, normalize=True, return_path=True):
+def MC_VaR(portfolio_returns, confidence=0.99, simulations=10000, return_path=True):
     """
-    This function performs Monte Carlo Simulation to estimate 1-day Value-at-Risk (VaR).
+    Monte Carlo simulation for portfolio-level VaR estimation.
 
-    - returns: asset return data from yfinance (use close price)
-    - weights: portfolio weight vector
-    - confidence: 99% confidence level
-    - normalize: normalize weights to sum to 1
-    - return_path: if True, return the full simulated return array
+    - portfolio_returns: time series of portfolio log returns (1D vector)
+    - confidence: confidence level for VaR
+    - simulations: number of simulations
+    - return_path: whether to return full simulated return paths
     """
-
     try:
-        weights = np.array(weights)
-        if normalize:
-            weights = weights / np.sum(weights)
+        mean = portfolio_returns.mean()
+        std = portfolio_returns.std()
 
-        # Mean vector and covariance matrix build a multivariate normal distribution
-        mean_vector = returns.mean().values
-        cov_matrix = returns.cov().values
+        simulated = np.random.normal(mean, std, size=simulations)
 
-        # Generate simulated asset returns
-        simulated_returns = np.random.multivariate_normal(mean_vector, cov_matrix, size=simulations)
+        VaR = np.percentile(simulated, (1 - confidence) * 100)
 
-        # Convert asset returns to portfolio returns
-        portfolio_simulated = simulated_returns.dot(weights)
-
-        # Calculate Value-at-Risk (VaR)
-        VaR = np.percentile(portfolio_simulated, (1 - confidence) * 100)
-
-        # Return simulated paths if needed
         if return_path:
-            return VaR, portfolio_simulated
+            return VaR, simulated
         else:
             return VaR
 
@@ -242,9 +232,8 @@ Simulate 1-day VaR using:
 # In[10]:
 
 
-Port1_Ticker_R = Port1_Ticker_P.pct_change().dropna()
-Port1_MC_VaR = MC_VaR(Port1_Ticker_R,weights)[0]
-Port1_MC_VaR_Path = MC_VaR(Port1_Ticker_R,weights)[1]
+Port1_MC_VaR = MC_VaR(Port1_Total_R)[0]
+Port1_MC_VaR_Path = MC_VaR(Port1_Total_R)[1]
 
 
 # In[11]:
@@ -433,7 +422,7 @@ Markdown(f"""
 # 
 # This section extends the baseline VaR backtest by incorporating a rolling evaluation over a 250-day estimation window. The simulation is updated daily, and violations are tracked dynamically to reflect changing market conditions.
 
-# In[21]:
+# In[20]:
 
 
 def rolling_mc_var_backtest(returns, test_start, test_end=None, window=250, num_sim=10000, confidence=0.99):
@@ -488,7 +477,7 @@ def rolling_mc_var_backtest(returns, test_start, test_end=None, window=250, num_
     return result_df
 
 
-# In[22]:
+# In[21]:
 
 
 rolling_result = rolling_mc_var_backtest(
@@ -498,7 +487,7 @@ rolling_result = rolling_mc_var_backtest(
 )
 
 
-# In[26]:
+# In[22]:
 
 
 x = rolling_result.index
@@ -521,7 +510,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[25]:
+# In[23]:
 
 
 total_days = len(rolling_result)
@@ -533,7 +522,7 @@ print(f"Violations: {violations}")
 print(f"Violation rate: {violation_rate:.2%}")
 
 
-# In[28]:
+# In[24]:
 
 
 total_days = len(rolling_result)
@@ -549,7 +538,7 @@ else:
     zone = "Red"
 
 
-# In[29]:
+# In[25]:
 
 
 Markdown(f"""
