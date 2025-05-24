@@ -72,7 +72,7 @@ Future extensions may include:
 
 ## Acknowledgment of Collaboration
 
-This project benefited from insightful input by HF, who proposed the rolling backtesting structure. Their contribution helped align the simulation output with the Basel regulatory backtesting framework, ensuring that the Monte Carlo VaR models were evaluated under conditions consistent with real-world regulatory expectations.
+This project benefited from insightful input by HFang, who proposed the rolling backtesting structure. Their contribution helped align the simulation output with the Basel regulatory backtesting framework, ensuring that the Monte Carlo VaR models were evaluated under conditions consistent with real-world regulatory expectations.
 Their expertise in stress testing and scenario-based capital modeling provided practical context for implementing a forward-looking evaluation of VaR model performance.
 
 ## License
