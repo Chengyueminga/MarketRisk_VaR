@@ -57,7 +57,7 @@ These factors collectively represent market, sector, style, and macroeconomic ex
 - **Backtesting**: Based on the Basel III “traffic light” framework over 250 trading days. Realized VaR exceptions are counted and evaluated according to [BCBS22](https://www.bis.org/publ/bcbs22.pdf).
 
 - **Rolling Backtesting**: To better reflect time-varying market volatility, a rolling window approach is applied. For each day in the test period, a 1-day 99% VaR is estimated using the most recent 250 trading days as the training window. This dynamic framework captures evolving risk conditions more realistically compared to a static backtest, helping identify periods of model underperformance.
-- 
+ 
 [Open Notebook](https://github.com/Chengyueminga/MarketRisk_VaR/blob/main/Beta-Based%20Risk%20Factor%20VaR%20Simulation%20for%20Basel%20III%20Backtesting%20.ipynb)
 
 
