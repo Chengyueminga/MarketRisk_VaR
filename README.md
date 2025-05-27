@@ -6,7 +6,7 @@
 
 >  If you find this project helpful, please consider ⭐️ starring or 🍴 forking it to support and share with others!
 
-**Disclaimer**: **Disclaimer**: This repository presents an independent, educational research project focused on market risk modeling. It explores Monte Carlo-based Value-at-Risk (VaR) estimation and regulatory backtesting within the public Basel III framework. All data and modeling methodologies are based on public sources (e.g., Yahoo Finance, standard academic references), and no proprietary models, internal systems, or institutional views are used or implied.
+**Disclaimer**: This repository presents an independent, educational research project focused on market risk modeling. It explores Monte Carlo-based Value-at-Risk (VaR) estimation and regulatory backtesting within the public Basel III framework. All data and modeling methodologies are based on public sources (e.g., Yahoo Finance, standard academic references), and no proprietary models, internal systems, or institutional views are used or implied.
 
 
 ## Modeling Approaches
